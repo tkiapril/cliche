@@ -61,7 +61,7 @@ def get_sentry() -> Sentry:
     """
     if not app.config['SENTRY_CLIENT']:
         app.config['SENTRY_CLIENT'] = setup_sentry()
-    return config['SENTRY_CLIENT']
+    return app.config['SENTRY_CLIENT']
 
 
 @app.route('/')
