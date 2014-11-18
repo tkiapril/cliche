@@ -23,7 +23,7 @@ from .user import user_app
 from ..work import Trope
 
 
-__all__ = 'app', 'check_login_status', 'index'
+__all__ = 'app', 'check_login_status', 'index', 'setup_sentry'
 
 
 #: (:class:`flask.Flask`) The Flask application object.
@@ -40,15 +40,16 @@ app.register_blueprint(user_app)
 app.register_blueprint(oauth_app)
 app.register_blueprint(adv_search_bp, url_prefix='/adv_search')
 
-app.config['SENTRY_DSN'] = os.environ.get('SENTRY_DSN', None)
-if app.config['SENTRY_DSN']:
-    app.config['SENTRY_INCLUDE_PATHS'] = ['cliche']
-    sentry = Sentry(
-        app,
-        dsn=app.config['SENTRY_DSN'],
-        logging=True,
-        level=logging.ERROR,
-    )
+
+def setup_sentry():
+    if app.config['SENTRY_DSN']:
+        app.config['SENTRY_INCLUDE_PATHS'] = ['cliche']
+        sentry = Sentry(
+            app,
+            dsn=app.config['SENTRY_DSN'],
+            logging=True,
+            level=logging.ERROR,
+        )
 
 
 @app.route('/')
