@@ -19,3 +19,4 @@ uwsgi:
   callable: app
   module: cliche.web.wsgi
   socket: /tmp/cliche-uwsgi.sock
+  plugins: python34
